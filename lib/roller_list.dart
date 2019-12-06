@@ -134,13 +134,22 @@ class _RollerListState extends State<RollerList> {
         if (offsetDifference.abs() > 1.0) {
           _programedJump = true;
           double jumpLength = (_currentIndex - 1) * _itemHeight;
-          scrollController.jumpTo(jumpLength);
+          WidgetsBinding.instance.addPostFrameCallback(
+              (duration) => _smoothScrollToItem(jumpLength));
         }
         return true;
       }
     } else {
       return false;
     }
+  }
+
+  void _smoothScrollToItem(double scrollLength) {
+    scrollController.animateTo(
+      scrollLength,
+      curve: Curves.easeIn,
+      duration: const Duration(milliseconds: 150),
+    );
   }
 
   double getOffsetForSelection(int index) {
