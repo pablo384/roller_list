@@ -22,8 +22,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  TimeOfDay time = new TimeOfDay(hour: 1, minute: 0);
-  final List<Widget> hours = _getHoursArray();
+  static const TIME_ITEM_WIDTH = 80.0;
+  TimeOfDay time;
+  final List<Widget> hours = _getTimeWidgetsArray(24);
+  final List<Widget> minutes = _getTimeWidgetsArray(60);
+
+  @override
+  void initState() {
+    DateTime now = DateTime.now();
+    time = new TimeOfDay(hour: now.hour, minute: now.minute);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,44 +40,64 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text("RollerList Demo"),
       ),
-      body: Center(
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Text(
-              'Clock inspiration', 
+              'Clock inspiration',
               textScaleFactor: 1.5,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            RollerList(
-              items: hours,
-              width: 100,
-              onSelectedIndexChanged: _changeTime,
-                          ),
-                          Text("Selected time is ${time.format(context)}"),
-                        ],
-                      ),
-                    ),
-                  );
-                }
-              
-                static List<Widget> _getHoursArray() {
-                  List<Widget> result = new List();
-                  for (int i = 0; i < 24; i++) {
-                    result.add(Padding(
-                      padding: EdgeInsets.all(12.0),
-                      child: Text("$i",
-                            textScaleFactor: 1.3,
-                            textAlign: TextAlign.center,
-                            ),
-                    ));
-                  }
-                  return result;
-                }
-              
-                void _changeTime(int value) {
-                  setState(() {
-                    time = new TimeOfDay(hour: value, minute: time.minute);
-                  });
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+              RollerList(
+                items: hours,
+                width: TIME_ITEM_WIDTH,
+                onSelectedIndexChanged: _changeHours,
+                initialIndex: time.hour,
+              ),
+              SizedBox(
+                width: 1.0,
+              ),
+              RollerList(
+                items: minutes,
+                width: TIME_ITEM_WIDTH,
+                onSelectedIndexChanged: _changeMinutes,
+                initialIndex: time.minute,
+              )
+            ]),
+            Text("Selected time is ${time.format(context)}"),
+          ],
+        ),
+      ),
+    );
+  }
+
+  static List<Widget> _getTimeWidgetsArray(int maxValue) {
+    List<Widget> result = new List();
+    for (int i = 0; i < maxValue; i++) {
+      result.add(Padding(
+        padding: EdgeInsets.all(12.0),
+        child: Text(
+          "$i",
+          textScaleFactor: 1.3,
+          textAlign: TextAlign.center,
+        ),
+      ));
+    }
+    return result;
+  }
+
+  void _changeHours(int value) {
+    setState(() {
+      time = new TimeOfDay(hour: value, minute: time.minute);
+    });
+  }
+
+  void _changeMinutes(int value) {
+    setState(() {
+      time = new TimeOfDay(hour: time.hour, minute: value);
+    });
   }
 }
