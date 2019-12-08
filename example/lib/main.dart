@@ -56,69 +56,117 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text("RollerList Demo"),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text(
-              'Clock inspiration',
-              textScaleFactor: 1.5,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-              RollerList(
-                items: hours,
-                width: TIME_ITEM_WIDTH,
-                onSelectedIndexChanged: _changeHours,
-                initialIndex: time.hour,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(
+                'Clock inspiration',
+                textScaleFactor: 1.5,
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
               SizedBox(
-                width: 1.0,
+                height: 16.0,
               ),
-              RollerList(
-                items: minutes,
-                width: TIME_ITEM_WIDTH,
-                onSelectedIndexChanged: _changeMinutes,
-                initialIndex: time.minute,
-              )
-            ]),
-            Text("Selected time is ${time.format(context)}"),
-            SizedBox(
-              height: 24.0,
-            ),
-            Container(
-              color: Colors.red,
-              padding: EdgeInsets.all(8.0),
-              alignment: Alignment.center,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  RollerList(
-                    items: slots,
-                    enabled: false,
-                    key: leftRoller,
-                  ),
-                  SizedBox(
-                    width: 3.0,
-                  ),
-                  RollerList(
-                    items: slots,
-                    onSelectedIndexChanged: _finishRotating,
-                    onScrollStarted: _startRotating,
-                  ),
-                  SizedBox(
-                    width: 3.0,
-                  ),
-                  RollerList(
-                    enabled: false,
-                    items: slots,
-                    key: rightRoller,
-                  ),
-                ],
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    RollerList(
+                      items: hours,
+                      width: TIME_ITEM_WIDTH,
+                      onSelectedIndexChanged: _changeHours,
+                      initialIndex: time.hour,
+                    ),
+                    SizedBox(
+                      width: 1.0,
+                    ),
+                    RollerList(
+                      items: minutes,
+                      width: TIME_ITEM_WIDTH,
+                      onSelectedIndexChanged: _changeMinutes,
+                      initialIndex: time.minute,
+                    )
+                  ]),
+              Text("Selected time is ${time.format(context)}"),
+              SizedBox(
+                height: 16.0,
               ),
-            ),
-          ],
+              Divider(),
+              SizedBox(
+                height: 16.0,
+              ),
+              Text(
+                'Slot Machine',
+                textScaleFactor: 1.5,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 16.0,
+              ),
+              Container(
+                width: 300,
+                child: Stack(
+                  children: <Widget>[
+                    Image.asset('assets/images/slot-machine.jpg'),
+                    Positioned(
+                      left: 94,
+                      right: 94,
+                      bottom: 90,
+                      child: Container(
+                        width: double.infinity,
+                        height: 40,
+                        color: Colors.white,
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(
+                              flex: 1,
+                              child: RollerList(
+                                items: slots,
+                                enabled: false,
+                                key: leftRoller,
+                              ),
+                            ),
+                            VerticalDivider(
+                              width: 2,
+                              color: Colors.black,
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: RollerList(
+                                items: slots,
+                                onSelectedIndexChanged: _finishRotating,
+                                onScrollStarted: _startRotating,
+                              ),
+                            ),
+                            VerticalDivider(
+                              width: 2,
+                              color: Colors.black,
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: RollerList(
+                                enabled: false,
+                                items: slots,
+                                key: rightRoller,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // Container(
+              //   color: Colors.red,
+              //   padding: EdgeInsets.all(8.0),
+              //   alignment: Alignment.center,
+              //   child:
+              // ),
+            ],
+          ),
         ),
       ),
     );
@@ -169,14 +217,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   static List<Widget> _getSlots() {
     List<Widget> result = new List();
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < 9; i++) {
       result.add(Container(
-        padding: EdgeInsets.all(12.0),
+        padding: EdgeInsets.all(4.0),
         color: Colors.white,
-        child: Text(
-          "$i",
-          textScaleFactor: 1.3,
-          textAlign: TextAlign.center,
+        child: Image.asset(
+          "assets/images/$i.png",
+          width: double.infinity,
+          height: double.infinity,
         ),
       ));
     }
