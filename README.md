@@ -1,14 +1,29 @@
-# hello
+# roller_list package
+This widget is a list of values distributed in a circle. The main rules of the list are: a user could scroll it in one direction endlessly, list values are limited and repeated in the same order over and over again.
+Possible usage scheme:
+-time selection
+-piano notes selection
+-choice of any limited number of items, where it is not important what should go first and what should go last.
 
-A new Flutter package project.
+## Example
+You can check Flutter for web build [here](https://opensource.0x.team/roller-list/demo/index.html#/)
 
-## Getting Started
+## How to use
+In the dependencies: section of your pubspec.yaml, add the following line:
+```dart
+roller_list: <latest version>
+```
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+Then import this class:
+```dart
+import 'package:roller_list/roller_list.dart';
+```
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+And add your list like this: 
+```dart
+RollerList(
+ items: slots,
+ enabled: false,
+ key: leftRoller,
+)
+```
