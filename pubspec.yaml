@@ -1,8 +1,8 @@
 name: roller_list
 description: A list that works similar to rollers in slot machine
-version: 0.0.1
+version: 0.5.1
 author: Koniukhova Valentina
-homepage:
+homepage: https://github.com/0xCompany/roller_list
 
 environment:
   sdk: ">=2.1.0 <3.0.0"

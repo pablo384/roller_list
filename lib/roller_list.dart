@@ -78,7 +78,7 @@ class RollerListState extends State<RollerList> {
     if (_itemHeight == null) {
       return widget.items[_currentIndex];
     } else {
-      return NotificationListener(
+      final Widget list = NotificationListener(
         child: Container(
           height: _itemHeight * (1 + widget.visibilityRadius * 2) + 2,
           width: _itemWidth,
@@ -86,9 +86,6 @@ class RollerListState extends State<RollerList> {
             children: <Widget>[
               Positioned.fill(
                 child: InfiniteListView.builder(
-                  physics: widget.enabled
-                      ? null
-                      : const NeverScrollableScrollPhysics(),
                   controller: scrollController,
                   itemExtent: _itemHeight,
                   itemBuilder: (BuildContext context, int index) {
@@ -122,6 +119,13 @@ class RollerListState extends State<RollerList> {
         ),
         onNotification: _onNotification,
       );
+      if (widget.enabled) {
+        return list;
+      } else {
+        return AbsorbPointer(
+          child: list,
+        );
+      }
     }
   }
 
@@ -140,7 +144,7 @@ class RollerListState extends State<RollerList> {
         double offsetDifference = scrollController.offset % _itemHeight;
         if (offsetDifference.abs() > 1.0) {
           _programedJump = true;
-          double jumpLength = (_currentIndex - 1) * _itemHeight;
+          double jumpLength = _currentIndex * _itemHeight;
           WidgetsBinding.instance
               .addPostFrameCallback((duration) => smoothScrollTo(jumpLength));
         }
@@ -165,7 +169,17 @@ class RollerListState extends State<RollerList> {
     );
   }
 
-  double getOffsetForSelection(int index) {
+  void smoothScrollToIndex(int index,
+      {Curve curve = Curves.easeIn,
+      Duration duration = const Duration(milliseconds: 150)}) {
+    scrollController.animateTo(
+      _getOffsetForSelection(index),
+      curve: curve,
+      duration: duration,
+    );
+  }
+
+  double _getOffsetForSelection(int index) {
     return (index - widget.visibilityRadius) * _itemHeight;
   }
 
@@ -174,6 +188,6 @@ class RollerListState extends State<RollerList> {
     int borderMovement =
         (offset - indexOffset * _itemHeight) ~/ (_itemHeight / 2);
     indexOffset += borderMovement;
-    return (1 + indexOffset) % widget.items.length;
+    return indexOffset % widget.items.length;
   }
 }
