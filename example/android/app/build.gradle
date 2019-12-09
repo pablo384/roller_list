@@ -37,7 +37,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "team.0x.rollerlist"
+        applicationId "ru.flutterdev.rollerlist"
         minSdkVersion 16
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()
