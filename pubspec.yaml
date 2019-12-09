@@ -1,7 +1,10 @@
 name: roller_list
-description: A list that works similar to rollers in slot machine
+description: >-
+  A list widget that works similar to rollers in slot machine.
+  The main rules of the list are: a user could scroll it in both directions
+  endlessly, list values are limited and repeated in the same order over and
+  over again.
 version: 0.5.1
-author: Koniukhova Valentina
 homepage: https://github.com/0xCompany/roller_list
 
 environment:
