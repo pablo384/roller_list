@@ -7,6 +7,8 @@ Possible usage scheme:
 
 ## Example
 You can check Flutter for web build [here](https://opensource.0x.team/roller-list/demo/index.html#/)
+Or see how it looks like on iphone:
+![](iphone_screen.gif)
 
 ## How to use
 In the dependencies: section of your pubspec.yaml, add the following line:
