@@ -1,10 +1,7 @@
 name: roller_list
 description: >-
-  A list widget that works similar to rollers in slot machine.
-  The main rules of the list are: a user could scroll it in both directions
-  endlessly, list values are limited and repeated in the same order over and
-  over again.
-version: 0.5.1
+  A list widget that works similar to rollers: endlessly scrolling over limited set of items.
+version: 0.5.2
 homepage: https://github.com/0xCompany/roller_list
 
 environment:
@@ -13,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  infinite_listview: ^1.0.0
+  infinite_listview: ^1.0.1+1
 
 dev_dependencies:
   flutter_test:
