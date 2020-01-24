@@ -1,3 +1,5 @@
+[![Codemagic build status](https://api.codemagic.io/apps/5e2a1ba1cc644b00105fe31d/5e2a1ba1cc644b00105fe31c/status_badge.svg)](https://codemagic.io/apps/5e2a1ba1cc644b00105fe31d/5e2a1ba1cc644b00105fe31c/latest_build)
+
 # roller_list package
 This widget is a list of values distributed in a circle. The main rules of the list are: a user could scroll it in one direction endlessly, list values are limited and repeated in the same order over and over again.
 Possible usage scheme:
