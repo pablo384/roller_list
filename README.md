@@ -19,11 +19,56 @@ Then import this class:
 import 'package:roller_list/roller_list.dart';
 ```
 
-And add your list like this: 
+And add your list like this (with only programmatical scroll):
 ```dart
 RollerList(
  items: slots,
  enabled: false,
  key: leftRoller,
 )
+```
+
+Or like this (with enabled scroll):
+```dart
+RollerList(
+  items: months,
+  onSelectedIndexChanged: _changeMonths,
+  initialIndex: 1,
+)
+```
+where months is a list of widgets:
+```dart
+static const MONTHS = {
+    "January": 31,
+    "February": 29,
+    "March": 31,
+    "April": 30,
+    "May": 31,
+    "June": 30,
+    "July": 31,
+    "August": 31,
+    "September": 30,
+    "October": 31,
+    "November": 30,
+    "December": 31
+  };
+
+final List<Widget> months = MONTHS.keys
+  .map((month) => Padding(
+        padding: EdgeInsets.all(12.0),
+        child: Text(
+          month,
+          textScaleFactor: 1.3,
+          textAlign: TextAlign.center,
+        ),
+      ))
+  .toList();
+```
+and _changeMonths will show the selection result somewhere in the widget tree:
+```dart
+void _changeMonths(int value) {
+    setState(() {
+      selectedMonth = MONTHS.keys.toList()[value];
+    });
+}
 ```

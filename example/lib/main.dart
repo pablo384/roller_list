@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'clock_selector.dart';
+import 'date_time_selector.dart';
 
 void main() {
   if (kIsWeb) {
@@ -83,8 +83,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
-        child:
-            Center(child: selectedItem == 0 ? ClockSelector() : SlotMachine()),
+        child: Center(
+            child: selectedItem == 0 ? DateTimeSelector() : SlotMachine()),
       ),
     );
   }

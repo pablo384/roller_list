@@ -1,3 +1,7 @@
+## [0.5.3] - 09.02.2020
+
+Add an option to build items in the list with function, fix some selection issues
+
 ## [0.5.2] - 09.12.2019
 
 Updates in dependency and description
