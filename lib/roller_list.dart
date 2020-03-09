@@ -96,7 +96,7 @@ class RollerListState extends State<RollerList> {
   Widget build(BuildContext context) {
     if (_itemHeight == null || _itemWidth == null) {
       if (widget.builder == null) {
-        return widget.items[_currentIndex];
+        return widget.items[selectedIndex];
       } else {
         return widget.builder(context, _currentIndex);
       }
@@ -123,7 +123,7 @@ class RollerListState extends State<RollerList> {
                 left: 0,
                 right: 0,
                 child: Container(
-                  height: 1,
+                  height: widget.dividerThickness,
                   width: _itemWidth,
                   color: widget.dividerColor,
                 ),
@@ -153,6 +153,8 @@ class RollerListState extends State<RollerList> {
     }
   }
 
+  int get selectedIndex => _currentIndex % _length;
+
   bool _onNotification(Notification notification) {
     if (notification is ScrollEndNotification) {
       if (_programedJump) {
@@ -163,7 +165,7 @@ class RollerListState extends State<RollerList> {
           _currentIndex = _findSelectedItem(notification.metrics.pixels);
         });
         if (widget.onSelectedIndexChanged != null) {
-          widget.onSelectedIndexChanged(_currentIndex);
+          widget.onSelectedIndexChanged(selectedIndex);
         }
         double offsetDifference = scrollController.offset % _itemHeight;
         if (offsetDifference.abs() > 1.0) {
@@ -221,6 +223,6 @@ class RollerListState extends State<RollerList> {
             indexOffset * _itemHeight) ~/
         (_itemHeight / 2);
     indexOffset += borderMovement;
-    return indexOffset % _length;
+    return indexOffset;
   }
 }

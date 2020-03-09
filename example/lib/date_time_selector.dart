@@ -69,6 +69,10 @@ class _DateTimeSelectorState extends State<DateTimeSelector> {
                   hour.toString().padLeft(2, '0'),
                   textScaleFactor: 1.3,
                   textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontWeight: hour == time.hour
+                          ? FontWeight.bold
+                          : FontWeight.normal),
                 ),
               );
             },
@@ -77,7 +81,7 @@ class _DateTimeSelectorState extends State<DateTimeSelector> {
             initialIndex: time.hour,
           ),
           SizedBox(
-            width: 2.0,
+            width: 4.0,
           ),
           RollerList(
             length: 60,
@@ -89,6 +93,10 @@ class _DateTimeSelectorState extends State<DateTimeSelector> {
                   minute.toString().padLeft(2, '0'),
                   textScaleFactor: 1.3,
                   textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontWeight: minute == time.minute
+                          ? FontWeight.bold
+                          : FontWeight.normal),
                 ),
               );
             },
@@ -105,15 +113,19 @@ class _DateTimeSelectorState extends State<DateTimeSelector> {
           RollerList(
             items: months,
             onSelectedIndexChanged: _changeMonths,
+            dividerColor: Colors.red,
+            dividerThickness: 2.0,
             initialIndex: 1,
           ),
           SizedBox(
-            width: 2.0,
+            width: 4.0,
           ),
           RollerList(
             items: _getDaysForMonth(selectedMonth),
             width: TIME_ITEM_WIDTH,
             onSelectedIndexChanged: _changeDays,
+            dividerColor: Colors.green,
+            dividerThickness: 2.0,
             initialIndex: selectedDay,
           )
         ]),

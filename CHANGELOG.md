@@ -1,3 +1,9 @@
+## [0.5.4] - 09.03.2020
+
+Get rid of jumping animation when the selected item is outside the main range.
+Add an option to set thickness of the divider line.
+In example it is clear how to highlight selected item inside list
+
 ## [0.5.3] - 09.02.2020
 
 Add an option to build items in the list with function, fix some selection issues
