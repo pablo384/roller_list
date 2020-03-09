@@ -14,6 +14,7 @@ class RollerList extends StatefulWidget {
   final Color dividerColor;
   final bool enabled;
   final int length;
+  final double dividerThickness;
 
   ///You should provide either [items] list or [builder] function and [length]. Priority is
   ///given to builder function. It is better to provide [width] and [height]. If these
@@ -36,6 +37,7 @@ class RollerList extends StatefulWidget {
     this.width,
     this.height,
     this.dividerColor = Colors.black,
+    this.dividerThickness = 1.0,
     this.enabled = true,
     Key key,
     this.onScrollStarted,
@@ -131,7 +133,7 @@ class RollerListState extends State<RollerList> {
                 left: 0,
                 right: 0,
                 child: Container(
-                  height: 1,
+                  height: widget.dividerThickness,
                   width: _itemWidth,
                   color: widget.dividerColor,
                 ),
