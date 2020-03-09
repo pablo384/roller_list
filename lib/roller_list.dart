@@ -32,7 +32,7 @@ class RollerList extends StatefulWidget {
     this.builder,
     this.length,
     this.onSelectedIndexChanged,
-    this.initialIndex = 0,
+    this.initialIndex,
     this.visibilityRadius = 1.0,
     this.width,
     this.height,
@@ -63,11 +63,11 @@ class RollerListState extends State<RollerList> {
     super.initState();
     _itemWidth = widget.width;
     _itemHeight = widget.height;
-    _currentIndex = widget.initialIndex;
+    _currentIndex = widget.initialIndex ?? 0;
     if (_itemHeight == null || _itemWidth == null) {
       WidgetsBinding.instance.addPostFrameCallback(_calculateHeight);
     } else {
-      if (_currentIndex != 0)
+      if (widget.initialIndex != null)
         WidgetsBinding.instance.addPostFrameCallback(_scrollAfterBuild);
     }
   }
@@ -81,14 +81,11 @@ class RollerListState extends State<RollerList> {
         _itemWidth = context.size.width;
       }
     });
-    if (_currentIndex != 0)
+    if (widget.initialIndex != null)
       WidgetsBinding.instance.addPostFrameCallback(_scrollAfterBuild);
   }
 
   void _scrollAfterBuild(_) {
-    setState(() {
-      _currentIndex = widget.initialIndex;
-    });
     scrollController.jumpTo((widget.initialIndex - 1) * _itemHeight);
   }
 

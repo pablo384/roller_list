@@ -1,9 +1,10 @@
 import 'package:example_roller_list/slot_machine.dart';
+import 'package:example_roller_list/time_selector.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'date_time_selector.dart';
+import 'date_selector.dart';
 
 void main() {
   if (kIsWeb) {
@@ -38,7 +39,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int selectedItem = 0;
+  int selectedItem = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -68,9 +69,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   new DropdownMenuItem(
                     child: new Text(
-                      'SLOT MACHINE',
+                      'DATES',
+                      textAlign: TextAlign.right,
                     ),
                     value: 1,
+                  ),
+                  new DropdownMenuItem(
+                    child: new Text(
+                      'SLOT MACHINE',
+                    ),
+                    value: 2,
                   ),
                 ],
                 onChanged: (int value) {
@@ -84,7 +92,9 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Center(
-            child: selectedItem == 0 ? DateTimeSelector() : SlotMachine()),
+            child: selectedItem == 0
+                ? TimeSelector()
+                : selectedItem == 1 ? DateSelector() : SlotMachine()),
       ),
     );
   }

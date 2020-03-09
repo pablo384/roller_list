@@ -1,3 +1,8 @@
+## [0.5.5] - 09.03.2020
+
+Add an example with one roller list that depends on another. Fix issue when initial selection is 0
+and this value is not selected in list
+
 ## [0.5.4] - 09.03.2020
 
 Get rid of jumping animation when the selected item is outside the main range.
