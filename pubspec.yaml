@@ -1,7 +1,7 @@
 name: roller_list
 description: >-
   A list widget that works similar to rollers: endlessly scrolling over limited set of items.
-version: 0.5.5
+version: 0.6.1
 homepage: https://github.com/0xCompany/roller_list
 
 environment:
@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   infinite_listview: ^1.0.1+1
+  pedantic: ^1.9.0
 
 dev_dependencies:
   flutter_test:

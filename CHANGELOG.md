@@ -1,3 +1,8 @@
+## [0.6.1] - 19.07.2020
+
+Now it is possible to lock user scroll to only one direction (up or down).
+Additionally error in example slot machine is fixed
+
 ## [0.5.5] - 09.03.2020
 
 Add an example with one roller list that depends on another. Fix issue when initial selection is 0

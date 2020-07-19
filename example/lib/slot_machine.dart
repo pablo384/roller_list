@@ -81,7 +81,7 @@ class _SlotMachineState extends State<SlotMachine> {
                           key: leftRoller,
                           onSelectedIndexChanged: (value) {
                             setState(() {
-                              first = value;
+                              first = value - 1;
                             });
                           },
                         ),
@@ -97,7 +97,7 @@ class _SlotMachineState extends State<SlotMachine> {
                           scrollType: ScrollType.goesOnlyBottom,
                           onSelectedIndexChanged: (value) {
                             setState(() {
-                              second = value;
+                              second = value - 1;
                             });
                             _finishRotating();
                           },
@@ -116,7 +116,7 @@ class _SlotMachineState extends State<SlotMachine> {
                           key: rightRoller,
                           onSelectedIndexChanged: (value) {
                             setState(() {
-                              third = value;
+                              third = value - 1;
                             });
                           },
                         ),

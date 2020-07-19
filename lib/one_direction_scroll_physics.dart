@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class OneDirectionScrollPhysics extends ScrollPhysics {
   OneDirectionScrollPhysics({ScrollPhysics parent, this.goesOnlyBottom = true})
       : super(parent: parent);
