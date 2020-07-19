@@ -2,6 +2,7 @@ library roller_list;
 
 import 'package:flutter/material.dart';
 import 'package:infinite_listview/infinite_listview.dart';
+import 'package:roller_list/one_direction_scroll_physics.dart';
 
 class RollerList extends StatefulWidget {
   final int initialIndex;
@@ -15,6 +16,7 @@ class RollerList extends StatefulWidget {
   final bool enabled;
   final int length;
   final double dividerThickness;
+  final ScrollType scrollType;
 
   ///You should provide either [items] list or [builder] function and [length]. Priority is
   ///given to builder function. It is better to provide [width] and [height]. If these
@@ -27,6 +29,8 @@ class RollerList extends StatefulWidget {
   ///called when scrolling is finished.
   ///[builder] function will get index with infinity range, so to get roller
   ///scroll effect it is required to use index % <list length>
+  ///[scrollType] is required to fix scroll direction to only bottom direction
+  ///or top direction
   const RollerList({
     this.items,
     this.builder,
@@ -39,6 +43,7 @@ class RollerList extends StatefulWidget {
     this.dividerColor = Colors.black,
     this.dividerThickness = 1.0,
     this.enabled = true,
+    this.scrollType = ScrollType.bothDirections,
     Key key,
     this.onScrollStarted,
   })  : assert(items != null || (builder != null && length != null)),
@@ -51,9 +56,11 @@ class RollerList extends StatefulWidget {
 }
 
 class RollerListState extends State<RollerList> {
-  InfiniteScrollController scrollController = new InfiniteScrollController();
+  final InfiniteScrollController scrollController = InfiniteScrollController();
+  ScrollPhysics _scrollPhysics;
   int _currentIndex;
   bool _programedJump = false;
+  bool _oneTimeAction = false;
   double _itemHeight;
   double _itemWidth;
   int get _length => widget.length ?? widget.items.length;
@@ -61,6 +68,11 @@ class RollerListState extends State<RollerList> {
   @override
   void initState() {
     super.initState();
+    if (widget.scrollType == ScrollType.goesOnlyBottom) {
+      _scrollPhysics = OneDirectionScrollPhysics(goesOnlyBottom: true);
+    } else if (widget.scrollType == ScrollType.goesOnlyTop) {
+      _scrollPhysics = OneDirectionScrollPhysics(goesOnlyBottom: false);
+    }
     _itemWidth = widget.width;
     _itemHeight = widget.height;
     _currentIndex = widget.initialIndex ?? 0;
@@ -106,6 +118,7 @@ class RollerListState extends State<RollerList> {
             children: <Widget>[
               Positioned.fill(
                 child: InfiniteListView.builder(
+                  physics: _scrollPhysics,
                   controller: scrollController,
                   itemExtent: _itemHeight,
                   itemBuilder: widget.builder ??
@@ -154,6 +167,7 @@ class RollerListState extends State<RollerList> {
 
   bool _onNotification(Notification notification) {
     if (notification is ScrollEndNotification) {
+      _oneTimeAction = false;
       if (_programedJump) {
         _programedJump = false;
         return true;
@@ -174,9 +188,11 @@ class RollerListState extends State<RollerList> {
         }
         return true;
       }
-    }
-    if (notification is ScrollStartNotification) {
-      if (!_programedJump && widget.onScrollStarted != null) {
+    } else if (notification is ScrollUpdateNotification) {
+      if (!_programedJump &&
+          !_oneTimeAction &&
+          widget.onScrollStarted != null) {
+        _oneTimeAction = true;
         widget.onScrollStarted();
       }
     }
@@ -223,3 +239,5 @@ class RollerListState extends State<RollerList> {
     return indexOffset;
   }
 }
+
+enum ScrollType { goesOnlyBottom, goesOnlyTop, bothDirections }

@@ -94,6 +94,7 @@ class _SlotMachineState extends State<SlotMachine> {
                         flex: 1,
                         child: RollerList(
                           items: slots,
+                          scrollType: ScrollType.goesOnlyBottom,
                           onSelectedIndexChanged: (value) {
                             setState(() {
                               second = value;
@@ -144,9 +145,9 @@ class _SlotMachineState extends State<SlotMachine> {
   void _rotateRoller(_) {
     final leftRotationTarget = _random.nextInt(3 * slots.length);
     final rightRotationTarget = _random.nextInt(3 * slots.length);
-    leftRoller.currentState.smoothScrollToIndex(leftRotationTarget,
+    leftRoller.currentState?.smoothScrollToIndex(leftRotationTarget,
         duration: _ROTATION_DURATION, curve: Curves.linear);
-    rightRoller.currentState.smoothScrollToIndex(rightRotationTarget,
+    rightRoller.currentState?.smoothScrollToIndex(rightRotationTarget,
         duration: _ROTATION_DURATION, curve: Curves.linear);
   }
 
