@@ -38,8 +38,8 @@ class _DateSelectorState extends State<DateSelector> {
           ))
       .toList();
 
-  int interval;
-  String intervalType;
+  int? interval;
+  String? intervalType;
   static const TEXT_STYLE = TextStyle(fontSize: 24, color: Colors.black);
   static const TEXT_STYLE_UNSELECTED =
       TextStyle(fontSize: 24, color: Colors.grey);
@@ -117,7 +117,7 @@ class _DateSelectorState extends State<DateSelector> {
                 length: intervalType == "Day" ? 99 : 12,
                 enabled: true,
                 onSelectedIndexChanged: _setInterval,
-                initialIndex: interval - 1,
+                initialIndex: interval! - 1,
               ),
               SizedBox(
                 width: 8.0,
@@ -129,14 +129,14 @@ class _DateSelectorState extends State<DateSelector> {
                   int actualIndex = index % _INTERVAL_OPTIONS.length;
                   return Center(
                     child: Text(
-                      _INTERVAL_OPTIONS[actualIndex],
+                      _INTERVAL_OPTIONS[actualIndex]!,
                       style: intervalType == _INTERVAL_OPTIONS[actualIndex]
                           ? TEXT_STYLE
                           : TEXT_STYLE_UNSELECTED,
                     ),
                   );
                 },
-                initialIndex: _INTERVAL_OPTIONS.indexOf(intervalType),
+                initialIndex: _INTERVAL_OPTIONS.indexOf(intervalType!),
                 length: _INTERVAL_OPTIONS.length,
                 enabled: true,
                 onSelectedIndexChanged: _setIntervalType,
@@ -150,8 +150,8 @@ class _DateSelectorState extends State<DateSelector> {
   }
 
   List<Widget> _getDaysForMonth(String selectedMonth) {
-    List<Widget> result = new List();
-    for (int i = 1; i <= MONTHS[selectedMonth]; i++) {
+    List<Widget> result = [];
+    for (int i = 1; i <= MONTHS[selectedMonth]!; i++) {
       result.add(Padding(
         padding: EdgeInsets.all(12.0),
         child: Text(
@@ -184,16 +184,16 @@ class _DateSelectorState extends State<DateSelector> {
 
   void _setIntervalType(int value) {
     if (_INTERVAL_OPTIONS[value] == "Day") {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        numberKey.currentState.smoothScrollToIndex(interval - 1);
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
+        numberKey.currentState!.smoothScrollToIndex(interval! - 1);
       });
     } else {
-      if (interval > 12) {
+      if (interval! > 12) {
         setState(() {
           interval = 12;
         });
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          numberKey.currentState.smoothScrollToIndex(interval - 1);
+        WidgetsBinding.instance!.addPostFrameCallback((_) {
+          numberKey.currentState!.smoothScrollToIndex(interval! - 1);
         });
       }
     }

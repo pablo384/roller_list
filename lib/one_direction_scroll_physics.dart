@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class OneDirectionScrollPhysics extends ScrollPhysics {
-  OneDirectionScrollPhysics({ScrollPhysics parent, this.goesOnlyBottom = true})
+  OneDirectionScrollPhysics({ScrollPhysics? parent, this.goesOnlyBottom = true})
       : super(parent: parent);
 
   final bool goesOnlyBottom;
@@ -10,7 +10,7 @@ class OneDirectionScrollPhysics extends ScrollPhysics {
   bool goesTop = false;
 
   @override
-  OneDirectionScrollPhysics applyTo(ScrollPhysics ancestor) {
+  OneDirectionScrollPhysics applyTo(ScrollPhysics? ancestor) {
     return OneDirectionScrollPhysics(parent: buildParent(ancestor));
   }
 

@@ -114,6 +114,7 @@ output.json
 **/android/gradlew.bat
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
+example/android/.gradle
 
 # iOS/XCode related
 **/ios/**/*.mode1v3
@@ -257,3 +258,6 @@ fabric.properties
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.gitignore.io/api/android,flutter,androidstudio
+.packages
+.packages
+example/android/local.properties

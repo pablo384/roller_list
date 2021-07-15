@@ -39,7 +39,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int selectedItem = 1;
+  int? selectedItem = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     value: 2,
                   ),
                 ],
-                onChanged: (int value) {
+                onChanged: (int? value) {
                   setState(() => selectedItem = value);
                 },
               ),

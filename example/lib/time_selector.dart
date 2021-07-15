@@ -10,7 +10,7 @@ class TimeSelector extends StatefulWidget {
 
 class _TimeSelectorState extends State<TimeSelector> {
   static const TIME_ITEM_WIDTH = 80.0;
-  TimeOfDay time;
+  late TimeOfDay time;
 
   @override
   void initState() {

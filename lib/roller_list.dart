@@ -5,16 +5,16 @@ import 'package:infinite_listview/infinite_listview.dart';
 import 'package:roller_list/one_direction_scroll_physics.dart';
 
 class RollerList extends StatefulWidget {
-  final int initialIndex;
+  final int? initialIndex;
   final double visibilityRadius;
-  final ValueChanged<int> onSelectedIndexChanged;
-  final VoidCallback onScrollStarted;
-  final List<Widget> items;
-  final IndexedWidgetBuilder builder;
-  final double width, height;
+  final ValueChanged<int>? onSelectedIndexChanged;
+  final VoidCallback? onScrollStarted;
+  final List<Widget>? items;
+  final IndexedWidgetBuilder? builder;
+  final double? width, height;
   final Color dividerColor;
   final bool enabled;
-  final int length;
+  final int? length;
   final double dividerThickness;
   final ScrollType scrollType;
 
@@ -44,7 +44,7 @@ class RollerList extends StatefulWidget {
     this.dividerThickness = 1.0,
     this.enabled = true,
     this.scrollType = ScrollType.bothDirections,
-    Key key,
+    Key? key,
     this.onScrollStarted,
   })  : assert(items != null || (builder != null && length != null)),
         super(key: key);
@@ -57,13 +57,13 @@ class RollerList extends StatefulWidget {
 
 class RollerListState extends State<RollerList> {
   final InfiniteScrollController scrollController = InfiniteScrollController();
-  ScrollPhysics _scrollPhysics;
-  int _currentIndex;
+  ScrollPhysics? _scrollPhysics;
+  late int _currentIndex;
   bool _programedJump = false;
   bool _oneTimeAction = false;
-  double _itemHeight;
-  double _itemWidth;
-  int get _length => widget.length ?? widget.items.length;
+  double? _itemHeight;
+  double? _itemWidth;
+  int get _length => widget.length ?? widget.items!.length;
 
   @override
   void initState() {
@@ -77,42 +77,42 @@ class RollerListState extends State<RollerList> {
     _itemHeight = widget.height;
     _currentIndex = widget.initialIndex ?? 0;
     if (_itemHeight == null || _itemWidth == null) {
-      WidgetsBinding.instance.addPostFrameCallback(_calculateHeight);
+      WidgetsBinding.instance!.addPostFrameCallback(_calculateHeight);
     } else {
       if (widget.initialIndex != null)
-        WidgetsBinding.instance.addPostFrameCallback(_scrollAfterBuild);
+        WidgetsBinding.instance!.addPostFrameCallback(_scrollAfterBuild);
     }
   }
 
   void _calculateHeight(_) {
     setState(() {
       if (_itemHeight == null) {
-        _itemHeight = context.size.height;
+        _itemHeight = context.size!.height;
       }
       if (_itemWidth == null) {
-        _itemWidth = context.size.width;
+        _itemWidth = context.size!.width;
       }
     });
     if (widget.initialIndex != null)
-      WidgetsBinding.instance.addPostFrameCallback(_scrollAfterBuild);
+      WidgetsBinding.instance!.addPostFrameCallback(_scrollAfterBuild);
   }
 
   void _scrollAfterBuild(_) {
-    scrollController.jumpTo((widget.initialIndex - 1) * _itemHeight);
+    scrollController.jumpTo((widget.initialIndex! - 1) * _itemHeight!);
   }
 
   @override
   Widget build(BuildContext context) {
     if (_itemHeight == null || _itemWidth == null) {
       if (widget.builder == null) {
-        return widget.items[selectedIndex];
+        return widget.items![selectedIndex];
       } else {
-        return widget.builder(context, _currentIndex);
+        return widget.builder!(context, _currentIndex);
       }
     } else {
       final Widget list = NotificationListener(
         child: Container(
-          height: _itemHeight * (1 + widget.visibilityRadius * 2) + 2,
+          height: _itemHeight! * (1 + widget.visibilityRadius * 2) + 2,
           width: _itemWidth,
           child: Stack(
             children: <Widget>[
@@ -123,13 +123,13 @@ class RollerListState extends State<RollerList> {
                   itemExtent: _itemHeight,
                   itemBuilder: widget.builder ??
                       (BuildContext context, int index) {
-                        int inListIndex = index % widget.items.length;
-                        return widget.items[inListIndex];
+                        int inListIndex = index % widget.items!.length;
+                        return widget.items![inListIndex];
                       },
                 ),
               ),
               Positioned(
-                bottom: widget.visibilityRadius * _itemHeight,
+                bottom: widget.visibilityRadius * _itemHeight!,
                 left: 0,
                 right: 0,
                 child: Container(
@@ -139,7 +139,7 @@ class RollerListState extends State<RollerList> {
                 ),
               ),
               Positioned(
-                top: widget.visibilityRadius * _itemHeight,
+                top: widget.visibilityRadius * _itemHeight!,
                 left: 0,
                 right: 0,
                 child: Container(
@@ -176,14 +176,14 @@ class RollerListState extends State<RollerList> {
           _currentIndex = _findSelectedItem(notification.metrics.pixels);
         });
         if (widget.onSelectedIndexChanged != null) {
-          widget.onSelectedIndexChanged(selectedIndex);
+          widget.onSelectedIndexChanged!(selectedIndex);
         }
-        double offsetDifference = scrollController.offset % _itemHeight;
+        double offsetDifference = scrollController.offset % _itemHeight!;
         if (offsetDifference.abs() > 1.0) {
           _programedJump = true;
           double jumpLength =
-              (_currentIndex - widget.visibilityRadius) * _itemHeight;
-          WidgetsBinding.instance
+              (_currentIndex - widget.visibilityRadius) * _itemHeight!;
+          WidgetsBinding.instance!
               .addPostFrameCallback((duration) => smoothScrollTo(jumpLength));
         }
         return true;
@@ -193,7 +193,7 @@ class RollerListState extends State<RollerList> {
           !_oneTimeAction &&
           widget.onScrollStarted != null) {
         _oneTimeAction = true;
-        widget.onScrollStarted();
+        widget.onScrollStarted!();
       }
     }
     return false;
@@ -225,16 +225,16 @@ class RollerListState extends State<RollerList> {
   }
 
   double _getOffsetForSelection(int index) {
-    return (index - widget.visibilityRadius) * _itemHeight;
+    return (index - widget.visibilityRadius) * _itemHeight!;
   }
 
   int _findSelectedItem(double offset) {
     int indexOffset =
-        (offset + widget.visibilityRadius * _itemHeight) ~/ _itemHeight;
+        (offset + widget.visibilityRadius * _itemHeight!) ~/ _itemHeight!;
     int borderMovement = (offset +
-            widget.visibilityRadius * _itemHeight -
-            indexOffset * _itemHeight) ~/
-        (_itemHeight / 2);
+            widget.visibilityRadius * _itemHeight! -
+            indexOffset * _itemHeight!) ~/
+        (_itemHeight! / 2);
     indexOffset += borderMovement;
     return indexOffset;
   }

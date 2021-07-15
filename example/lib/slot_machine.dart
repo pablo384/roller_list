@@ -26,10 +26,10 @@ class _SlotMachineState extends State<SlotMachine> {
     "orange",
     "watermelon",
   ];
-  int first, second, third;
+  int? first, second, third;
   final leftRoller = new GlobalKey<RollerListState>();
   final rightRoller = new GlobalKey<RollerListState>();
-  Timer rotator;
+  Timer? rotator;
   Random _random = new Random();
 
   @override
@@ -132,7 +132,7 @@ class _SlotMachineState extends State<SlotMachine> {
           height: 16.0,
         ),
         Text(
-            "Result: ${slotNames[first]}-${slotNames[second]}-${slotNames[third]}"),
+            "Result: ${slotNames[first!]}-${slotNames[second!]}-${slotNames[third!]}"),
         (first == second && first == third) ? Text("WIN!!!") : Container(),
       ],
     );
@@ -156,7 +156,7 @@ class _SlotMachineState extends State<SlotMachine> {
   }
 
   static List<Widget> _getSlots() {
-    List<Widget> result = new List();
+    List<Widget> result = [];
     for (int i = 0; i <= 9; i++) {
       result.add(Container(
         padding: EdgeInsets.all(4.0),
