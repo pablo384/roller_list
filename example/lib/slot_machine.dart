@@ -26,9 +26,10 @@ class _SlotMachineState extends State<SlotMachine> {
     "orange",
     "watermelon",
   ];
-  int? first, second, third;
+  int? first, second, third, fourth;
   final leftRoller = new GlobalKey<RollerListState>();
   final rightRoller = new GlobalKey<RollerListState>();
+  final fourthRoller = new GlobalKey<RollerListState>();
   Timer? rotator;
   Random _random = new Random();
 
@@ -37,6 +38,7 @@ class _SlotMachineState extends State<SlotMachine> {
     first = 0;
     second = 0;
     third = 0;
+    fourth = 0;
     super.initState();
   }
 
@@ -120,7 +122,24 @@ class _SlotMachineState extends State<SlotMachine> {
                             });
                           },
                         ),
-                      )
+                      ),
+                      VerticalDivider(
+                        width: 2,
+                        color: Colors.black,
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: RollerList(
+                          enabled: false,
+                          items: slots,
+                          key: fourthRoller,
+                          onSelectedIndexChanged: (value) {
+                            setState(() {
+                              fourth = value - 1;
+                            });
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -131,9 +150,11 @@ class _SlotMachineState extends State<SlotMachine> {
         SizedBox(
           height: 16.0,
         ),
-        Text(
-            "Result: ${slotNames[first!]}-${slotNames[second!]}-${slotNames[third!]}"),
-        (first == second && first == third) ? Text("WIN!!!") : Container(),
+        if (slotNames.length < third!)
+          Text(
+              "Result: ${slotNames[first!]}-${slotNames[second!]}-${slotNames[third!]}"),
+        if (slotNames.length < third!)
+          (first == second && first == third) ? Text("WIN!!!") : Container(),
       ],
     );
   }
@@ -148,6 +169,8 @@ class _SlotMachineState extends State<SlotMachine> {
     leftRoller.currentState?.smoothScrollToIndex(leftRotationTarget,
         duration: _ROTATION_DURATION, curve: Curves.linear);
     rightRoller.currentState?.smoothScrollToIndex(rightRotationTarget,
+        duration: _ROTATION_DURATION, curve: Curves.linear);
+    fourthRoller.currentState?.smoothScrollToIndex(rightRotationTarget,
         duration: _ROTATION_DURATION, curve: Curves.linear);
   }
 

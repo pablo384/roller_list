@@ -129,7 +129,7 @@ class _DateSelectorState extends State<DateSelector> {
                   int actualIndex = index % _INTERVAL_OPTIONS.length;
                   return Center(
                     child: Text(
-                      _INTERVAL_OPTIONS[actualIndex]!,
+                      _INTERVAL_OPTIONS[actualIndex],
                       style: intervalType == _INTERVAL_OPTIONS[actualIndex]
                           ? TEXT_STYLE
                           : TEXT_STYLE_UNSELECTED,

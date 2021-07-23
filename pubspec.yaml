@@ -2,7 +2,7 @@ name: roller_list
 description: >-
   A list widget that works similar to rollers: endlessly scrolling over limited
   set of items.
-version: 0.6.1
+version: 1.0.1
 homepage: https://github.com/0xCompany/roller_list
 
 environment:
